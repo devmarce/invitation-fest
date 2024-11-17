@@ -1,3 +1,3 @@
 <?php
-  include_once './template-inv/templates/template-keila.php';
+  include './templates/template-keila/index-keila.php';
 ?>

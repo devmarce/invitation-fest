@@ -1,7 +1,4 @@
 <?php
-include_once 'functions.php';
-#include_once 'template-keila.php';
-
 
 // Redireccionar a otra página del mismo sitio
 header("Location: keila.php");
