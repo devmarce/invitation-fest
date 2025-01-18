@@ -1,5 +1,5 @@
 <?php
-$alias_keila = "mis15keila";
+$alias_keila = "KeilaMis15";
 $link_a_mp = "https://852u.adj.st/home/?adj_t=mqo65e0&adj_label=nav_mp_login&adj_campaign=nav_mp_login&adj_fallback=https%3A%2F%2Fwww.mercadolibre.com%2Fjms%2Fmla%2Flgz%2Flogin%3Fplatform_id%3DMP%26go%3Dhttps%253A%252F%252Fwww.mercadopago.com.ar%252F%26loginType%3Dexplicit&adj_redirect_macos=https%3A%2F%2Fwww.mercadolibre.com%2Fjms%2Fmla%2Flgz%2Flogin%3Fplatform_id%3DMP%26go%3Dhttps%253A%252F%252Fwww.mercadopago.com.ar%252F%26loginType%3Dexplicit";
 ?>
 
@@ -29,7 +29,7 @@ $link_a_mp = "https://852u.adj.st/home/?adj_t=mqo65e0&adj_label=nav_mp_login&adj
         <div class="card-body text-center" style="color: #fff;">
             <h3 class="font-keyla-cursiva mb-5" style="font-size: 2rem;     -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(255, 255, 255, 0.5)));">Regalo</h3>
 
-            <p id="alias-mp" style="display: none;"><?php echo $alias_keila; ?></p>
+            <p id="alias-mpx" style="display: none;"><?php echo $alias_keila; ?></p>
 
             <hr>
             <p class="card-text">
@@ -38,7 +38,7 @@ $link_a_mp = "https://852u.adj.st/home/?adj_t=mqo65e0&adj_label=nav_mp_login&adj
             </p>
 
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-mp" onclick="copiarAlPortapapeles('alias-mp')" style="background: #009ee3; color: #fff; box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4, 0 0 200px #03e9f4;
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-mp" onclick="copiarAlPortapapeles('alias-mpx')" style="background: #009ee3; color: #fff; box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4, 0 0 200px #03e9f4;
     -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);">Copiar Alias de Keila</button>
 
             <!-- Modal -->
@@ -64,7 +64,7 @@ $link_a_mp = "https://852u.adj.st/home/?adj_t=mqo65e0&adj_label=nav_mp_login&adj
                             <br>
                         </div>
                         <div class="modal-footer d-block card-bg-dorado">
-                            <a href="<?php echo $link_a_mp; ?>" type="button" class="btn btn-primary latido" style="background: #009ee3; color: #fff;box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4, 0 0 200px #03e9f4;" onclick="copiarAlPortapapeles('alias-mp')">Ir a MercadoPago</a>
+                            <a href="<?php echo $link_a_mp; ?>" type="button" class="btn btn-primary latido" style="background: #009ee3; color: #fff;box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4, 0 0 200px #03e9f4;" onclick="copiarAlPortapapeles('alias-mpx')">Ir a MercadoPago</a>
                         </div>
                     </div>
                 </div>

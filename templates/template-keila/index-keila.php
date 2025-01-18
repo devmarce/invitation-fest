@@ -95,15 +95,6 @@ include_once 'functions.php';
         color: #333;
     }
 
-    video {
-        position: fixed;
-        right: 0;
-        bottom: 0;
-        min-width: 105%;
-        min-height: 100%;
-        transform: translateX(calc((100% - 100vw) / 2));
-        z-index: -2;
-    }
 </style>
 
 <!-- progress css -->
@@ -136,6 +127,7 @@ include_once 'functions.php';
 
 <style>
   .ocultar-true { display: none; }
+  .ocultar-agradecimiento { display: none; }
 </style>
 <?php
 $tormenta = 1;
@@ -152,7 +144,7 @@ $mute_audio = 0;
     <?php # video de rayos: 
     ?>
     <?php if ($tormenta) : ?>
-        <video src="./templates/template-keila/img/rayos.mp4" autoplay="true" muted="true" loop="true" poster="./templates/template-keila/img/keila-metal.jpg"></video>
+        <video class="video-rayos" src="<?php echo VIDEO_RAYOS; ?>" autoplay="true" muted="true" loop="true" poster="./templates/template-keila/img/keila-metal.jpg"></video>
     <?php endif; ?>
     <main>
 
@@ -181,14 +173,16 @@ $mute_audio = 0;
         include_once 'vestimenta.php';
         echo '</div>';
         
-        
         include_once 'regalo_mp.php';
         
         echo '<div class="ocultar-false">';
         include_once 'confirmacion.php';
         echo '</div>';
-
+        
+        
+        echo '<div id="agradecimiento" class="ocultar-agradecimiento">';
         include_once 'agradecimientos.php';
+        echo '</div>';
         ?>
         
         <div class="container pt-2">

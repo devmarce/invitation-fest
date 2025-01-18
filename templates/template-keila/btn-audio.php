@@ -1,4 +1,3 @@
-<!-- @audio -->
 <style type="text/css">
     .boton-open-inv {
         background-color: rgb(11, 244, 244);

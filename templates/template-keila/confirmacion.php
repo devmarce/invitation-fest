@@ -175,7 +175,7 @@
             music_pref = '';
             music_titulo = '';
         }
-        
+
         // Función para capitalizar palabras
         function capitalizeWords(str) {
             return str
@@ -187,16 +187,16 @@
 
         // Crear el mensaje para WhatsApp
         const message = `     ✨ Fiesta de Keila ✨
-——————🔹——————
-Hola, Soy → ${capitalizeWords(fullName)}
- Quería Confirmar que:
-*${msj_asistencia}*
-——————🔹——————
-${music_titulo}
-${music_pref}
+        ——————🔹——————
+        Hola, Soy → ${capitalizeWords(fullName)}
+        Quería Confirmar que:
+        *${msj_asistencia}*
+        ——————🔹——————
+        ${music_titulo}
+        ${music_pref}
 
-${saludo}
-Saludos!`;
+        ${saludo}
+        Saludos!`;
 
         // Codificar el mensaje para incluirlo en el link de WhatsApp
         const encodedMessage = encodeURIComponent(message);
