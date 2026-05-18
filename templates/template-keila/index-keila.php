@@ -1,5 +1,10 @@
 <?php
 include_once 'functions.php';
+
+if (isset($_GET['mi-galeria'])) {
+    include_once 'galeria.php';
+    exit();
+}
 ?>
 <!doctype html>
 <html lang="es">
@@ -177,6 +182,12 @@ $mute_audio = 0;
         
         echo '<div class="ocultar-false">';
         include_once 'confirmacion.php';
+        echo '</div>';
+        
+        echo '<div class="ocultar-false container my-5 text-center">';
+        echo '  <h2 class="font-keyla-cursiva size2-2 text-white mb-3 mt-4">Nuestra Galería</h2>';
+        echo '  <p class="text-white mb-4">¡Compartí con nosotros las fotos de la fiesta!</p>';
+        echo '  <a href="?mi-galeria" class="btn-modal p-3 rounded text-decoration-none d-inline-block fw-bold" style="background-color: #000; border: 1px solid #f600ff; color: #f600ff; box-shadow: 0 0 15px #f600ff; text-transform: uppercase;">Ir a la Galería 📸</a>';
         echo '</div>';
         
         
