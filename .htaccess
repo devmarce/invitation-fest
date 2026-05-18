@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Si el archivo o directorio existe, no hagas nada
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Redirigir la ruta sin extensión al archivo .php
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
