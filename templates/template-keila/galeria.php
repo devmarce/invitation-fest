@@ -1,7 +1,7 @@
 <?php
 // Manejar la subida de archivos
 $galeria_dir = RUTA_RELATIVA . 'img/galeria/';
-$codigo_correcto = CODIGO_ADMIN;
+$codigo_correcto = defined('CODIGO_ADMIN') ? CODIGO_ADMIN : '1234';
 
 // Endpoint para el slider dinámico
 if (isset($_GET['ajax_slider'])) {
@@ -38,22 +38,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (isset($_FILES['fotos'])) {
         $total_files = count($_FILES['fotos']['name']);
         $subidas = 0;
+        $errores = 0;
 
         for ($i = 0; $i < $total_files; $i++) {
             $tmpFilePath = $_FILES['fotos']['tmp_name'][$i];
             if ($tmpFilePath != "") {
-                // Renombrar archivo para evitar conflictos y caracteres raros
-                $extension = pathinfo($_FILES['fotos']['name'][$i], PATHINFO_EXTENSION);
-                $newFilePath = $galeria_dir . uniqid() . '.' . $extension;
+                $extension = strtolower(pathinfo($_FILES['fotos']['name'][$i], PATHINFO_EXTENSION));
+                $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
-                if (move_uploaded_file($tmpFilePath, $newFilePath)) {
-                    $subidas++;
+                // Validar extensión y que el archivo sea realmente una imagen (previene archivos maliciosos renombrados)
+                if (in_array($extension, $allowed_extensions) && @getimagesize($tmpFilePath) !== false) {
+                    $newFilePath = $galeria_dir . uniqid() . '.' . $extension;
+
+                    if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+                        $subidas++;
+                    }
+                } else {
+                    $errores++;
                 }
             }
         }
 
         if ($subidas > 0) {
             $mensaje = "<div class='alert alert-success mt-3' style='background-color: rgba(37, 211, 102, 0.2); border-color: #25D366; color: #25D366;'>¡$subidas foto(s) subida(s) con éxito!</div>";
+        }
+        if ($errores > 0) {
+            $mensaje .= "<div class='alert alert-danger mt-3' style='background-color: rgba(255, 51, 102, 0.2); border-color: #ff3366; color: #ff3366;'>Hubo $errores archivo(s) que no se subieron porque no eran imágenes válidas.</div>";
         }
     }
 }
@@ -136,7 +146,7 @@ if ($imagenes !== false) {
         }
 
         .masonry-grid {
-            column-count: 3;
+            column-count: 4;
             column-gap: 1.5rem;
             padding: 0 1rem;
         }
@@ -183,7 +193,8 @@ if ($imagenes !== false) {
 
         @media (max-width: 768px) {
             .masonry-grid {
-                column-count: 2;
+                column-count: 3;
+                column-gap: 1rem;
             }
 
             .header-galeria h1 {
@@ -197,7 +208,12 @@ if ($imagenes !== false) {
 
         @media (max-width: 480px) {
             .masonry-grid {
-                column-count: 1;
+                column-count: 2;
+                column-gap: 0.5rem;
+            }
+
+            .masonry-grid .img-wrapper {
+                margin-bottom: 0.5rem;
             }
 
             .header-galeria h1 {
@@ -343,11 +359,13 @@ if ($imagenes !== false) {
             <div class="col-md-8">
                 <div class="upload-card">
                     <form action="" method="POST" enctype="multipart/form-data">
-                        <div class="mb-3 text-start">
-                            <label for="fotos" class="form-label" style="font-size: 1.1rem; color: #03e9f4;">Seleccioná
-                                las fotos para subir</label>
-                            <input class="form-control form-control-lg bg-dark text-white border-secondary" type="file"
-                                id="fotos" name="fotos[]" multiple accept="image/*" required>
+                        <div class="mb-3 text-center">
+                            <label for="fotos" class="custom-file-upload d-block" style="background: rgba(255,255,255,0.05); color: #fff; border: 2px dashed rgba(3,233,244,0.5); padding: 20px 30px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(3,233,244,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                                <div style="font-size: 2rem; color: #03e9f4; font-weight: bold; margin-bottom: 5px;">+ Foto</div>
+                                <div style="font-size: 0.9rem; color: #ccc;">Tocá acá para seleccionar tus fotos</div>
+                            </label>
+                            <input class="d-none" type="file" id="fotos" name="fotos[]" multiple accept="image/*" required onchange="actualizarNombreArchivos(this)">
+                            <div id="file-chosen-text" style="color: #f600ff; font-size: 1rem; margin-top: 10px; font-weight: 500;"></div>
                         </div>
                         <button type="submit" class="btn btn-neon w-100">Subir Fotos</button>
                     </form>
@@ -605,6 +623,34 @@ if ($imagenes !== false) {
             } else {
                 alert('Ingresá un código para continuar.');
                 document.getElementById('input-codigo-modal').focus();
+            }
+        }
+
+        function actualizarNombreArchivos(input) {
+            const label = document.getElementById('file-chosen-text');
+            if (input.files && input.files.length > 0) {
+                // Validar que todos los archivos sean imágenes
+                let allImages = true;
+                for (let i = 0; i < input.files.length; i++) {
+                    if (!input.files[i].type.startsWith('image/')) {
+                        allImages = false;
+                        break;
+                    }
+                }
+                
+                if (!allImages) {
+                    alert('Por favor, seleccioná únicamente imágenes (JPG, PNG, GIF, etc.). No se permiten otros tipos de archivos.');
+                    input.value = ''; // Limpiar la selección
+                    label.innerText = 'Selección cancelada. Sólo se permiten imágenes.';
+                    label.style.color = '#ff3366';
+                    return;
+                }
+
+                const count = input.files.length;
+                label.innerText = count === 1 ? '1 foto seleccionada lista para subir' : `${count} fotos seleccionadas listas para subir`;
+                label.style.color = '#f600ff'; // Restaurar color original por si hubo error antes
+            } else {
+                label.innerText = '';
             }
         }
 
