@@ -16,4 +16,5 @@ define('RUTA_RELATIVA', './templates/template-keila/');
 //video de fondo
 define('VIDEO_RAYOS', RUTA_RELATIVA . 'img/rayos.mp4');
 
-//
+//Codigo administrador
+define('CODIGO_ADMIN', '1234');
